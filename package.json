@@ -16,8 +16,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "react-code-actions.extractToFile",
-        "title": "Extract to Component file"
+        "command": "react-code-actions.extractToFunction",
+        "title": "Extract to function component in same file"
       }
     ]
   },
@@ -30,6 +30,7 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
+    "@types/babel__template": "^7.0.2",
     "@types/babel__traverse": "^7.0.13",
     "@types/glob": "^7.1.3",
     "@types/mocha": "^8.0.0",
@@ -45,6 +46,7 @@
   },
   "dependencies": {
     "@babel/parser": "^7.11.4",
+    "@babel/template": "^7.10.4",
     "@babel/traverse": "^7.11.0",
     "@babel/types": "^7.11.0"
   }

@@ -1,54 +1,15 @@
 import * as vscode from "vscode";
-import * as parser from "@babel/parser";
-import * as t from "@babel/types";
-import traverse from "@babel/traverse";
 
-function codeToAst(code: string) {
-  return parser.parse(code, {
-    startLine: 0,
-    plugins: ["objectRestSpread", "classProperties", "typescript", "jsx"],
-    sourceType: "module",
-  });
-}
+import extractToFunction from "./extractToFunction";
+import { codeToAst, getJSXIdentifierOnCursor } from "./ast";
 
-function isCursorOnJSXIdentifier(
-  ast: t.File,
-  position: vscode.Position
-): boolean {
-  let match = false;
-
-  traverse(ast, {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    JSXIdentifier(path) {
-      if (!path.node.loc) {
-        return;
-      }
-
-      const isCapitalized =
-        path.node.name[0] === path.node.name[0].toUpperCase();
-      const isOnLine = path.node.loc.start.line === position.line;
-      const isWithinColums =
-        path.node.loc.start.column <= position.character &&
-        position.character <= path.node.loc.end.column;
-
-      const conditions = [isCapitalized, isOnLine, isWithinColums];
-
-      if (conditions.every(Boolean)) {
-        match = true;
-        path.stop();
-      }
-    },
-  });
-
-  return match;
-}
-
-function isCodeActionAvailable(editor: vscode.TextEditor) {
+function isCodeActionAvailable(editor: vscode.TextEditor): boolean {
   const code = editor.document.getText();
   const cursorPosition = editor.selection.active;
 
   const ast = codeToAst(code);
-  return isCursorOnJSXIdentifier(ast, cursorPosition);
+  const componentNamePath = getJSXIdentifierOnCursor(ast, cursorPosition);
+  return !!componentNamePath;
 }
 
 export class CodeActionProvider implements vscode.CodeActionProvider {
@@ -61,8 +22,8 @@ export class CodeActionProvider implements vscode.CodeActionProvider {
     const codeActions = [];
     if (isCodeActionAvailable(editor)) {
       codeActions.push({
-        command: "react-code-actions.extractToFuntion",
-        title: "React: Extract Component to function",
+        command: "react-code-actions.extractToFunction",
+        title: "Extract to function component in same file",
       });
     }
 
@@ -79,8 +40,9 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand("react-code-actions.extractToFile", () =>
-      vscode.window.setStatusBarMessage("hello", 2000)
+    vscode.commands.registerCommand(
+      "react-code-actions.extractToFunction",
+      extractToFunction
     )
   );
 }
