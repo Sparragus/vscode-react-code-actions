@@ -1,6 +1,7 @@
 {
   "name": "vscode-react-code-actions",
   "displayName": "React Code Actions",
+  "license": "MIT",
   "description": "",
   "version": "0.0.1",
   "engines": {
