@@ -52,7 +52,7 @@ export function findParentComponent(path: NodePath): NodePath {
   );
 
   if (!parent) {
-    throw new Error("Invalid path.");
+    throw new Error("Invalid component.");
   }
 
   return parent;

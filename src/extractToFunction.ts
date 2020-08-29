@@ -6,7 +6,6 @@ import {
   findParentComponent,
   getJSXIdentifierOnCursor,
 } from "./ast";
-import { create } from "domain";
 
 function createFunctionComponent(componentName: string) {
   return `function ${componentName}({ className }) {
