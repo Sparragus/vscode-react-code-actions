@@ -1,11 +1,11 @@
 import * as vscode from "vscode";
 import { NodePath } from "@babel/traverse";
-import * as t from "@babel/types";
 import {
   codeToAst,
   findParentComponent,
   getJSXIdentifierOnCursor,
 } from "./ast";
+import * as t from "@babel/types";
 
 function createFunctionComponent(componentName: string) {
   return `function ${componentName}({ className }) {

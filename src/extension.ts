@@ -1,6 +1,8 @@
 import * as vscode from "vscode";
 
 import extractToFunction from "./extractToFunction";
+import extractToFileInSameFolder from "./extractToFileInSameFolder";
+
 import { codeToAst, getJSXIdentifierOnCursor } from "./ast";
 
 function isCodeActionAvailable(editor: vscode.TextEditor): boolean {
@@ -21,10 +23,16 @@ export class CodeActionProvider implements vscode.CodeActionProvider {
 
     const codeActions = [];
     if (isCodeActionAvailable(editor)) {
-      codeActions.push({
-        command: "react-code-actions.extractToFunction",
-        title: "Extract to function component in same file",
-      });
+      codeActions.push(
+        {
+          command: "react-code-actions.extractToFunction",
+          title: "Extract to function component in same file",
+        },
+        {
+          command: "react-code-actions.extractToFileInSameFolder",
+          title: "Extract to file in the same folder",
+        }
+      );
     }
 
     return codeActions;
@@ -43,6 +51,10 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       "react-code-actions.extractToFunction",
       extractToFunction
+    ),
+    vscode.commands.registerCommand(
+      "react-code-actions.extractToFileInSameFolder",
+      extractToFileInSameFolder
     )
   );
 }
