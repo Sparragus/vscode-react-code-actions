@@ -32,5 +32,3 @@ The following code actions will be available:
 - New component in the same file
 - New component in the same folder
 - New component in the components folder
-
-### New component in the same file
