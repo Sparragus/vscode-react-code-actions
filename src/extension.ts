@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 
 import extractToFunction from "./extractToFunction";
 import extractToFileInSameFolder from "./extractToFileInSameFolder";
+import extractToFileInComponentsFolder from "./extractToFileInComponentsFolder";
 
 import { codeToAst, getJSXIdentifierOnCursor } from "./ast";
 
@@ -31,6 +32,10 @@ export class CodeActionProvider implements vscode.CodeActionProvider {
         {
           command: "react-code-actions.extractToFileInSameFolder",
           title: "Extract to file in the same folder",
+        },
+        {
+          command: "react-code-actions.extractToFileInComponentsFolder",
+          title: "Extract to file in the components folder",
         }
       );
     }
@@ -55,6 +60,10 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       "react-code-actions.extractToFileInSameFolder",
       extractToFileInSameFolder
+    ),
+    vscode.commands.registerCommand(
+      "react-code-actions.extractToFileInComponentsFolder",
+      extractToFileInComponentsFolder
     )
   );
 }

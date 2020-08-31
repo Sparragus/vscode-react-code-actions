@@ -46,6 +46,10 @@
       {
         "command": "react-code-actions.extractToFileInSameFolder",
         "title": "Extract to file in the same folder"
+      },
+      {
+        "command": "react-code-actions.extractToFileInComponentsFolder",
+        "title": "Extract to file in the components folder"
       }
     ]
   },

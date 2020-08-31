@@ -24,15 +24,16 @@ function getInsertImportAt(ast: t.File) {
 }
 
 function createFileFunctionComponent(componentName: string): string {
-  return `import * as React from 'react';
-
-export default function ${componentName}({ className }) {
-  return (
-    <div className={className}>
-      ${componentName}
-    </div>
-  );
-}`;
+  return `
+    import * as React from 'react';
+    export default function ${componentName}({ className }) {
+      return (
+        <div className={className}>
+          ${componentName}
+        </div>
+      );
+    }
+  `;
 }
 
 export default async function extractToFileInSameFolder() {
